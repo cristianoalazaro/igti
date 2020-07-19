@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <title>MANIPULAÇÃO DE CORES</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="labels">
+        <label id="label1">(R) Vermelho</label><br /><br />
+        <label id="label2">(G) Verde</label><br /><br />
+        <label id="label3">(B) Azul</label><br /><br />
+      </div>
+      <div class="ranges">
+        <input
+          type="range"
+          min="0"
+          max="255"
+          id="range1"
+          value="0"
+        /><br /><br />
+        <input
+          type="range"
+          min="0"
+          max="255"
+          id="range2"
+          value="0"
+        /><br /><br />
+        <input
+          type="range"
+          min="0"
+          max="255"
+          id="range3"
+          value="0"
+        /><br /><br />
+      </div>
+      <div class="texts">
+        <input type="text" id="text1" value="0" readonly disabled /><br /><br />
+        <input type="text" id="text2" value="0" readonly disabled /><br /><br />
+        <input type="text" id="text3" value="0" readonly disabled /><br /><br />
+      </div>
+    </div>
+    <div class="cor" id="cor"></div>
+
+    <script src="./js/script.js"></script>
+  </body>
+</html>
