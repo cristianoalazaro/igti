@@ -1,0 +1,57 @@
+.container {
+  margin-top: 100px;
+  margin-left: 100px;
+  display: flex;
+  border: 1px solid #000;
+  width: 600px;
+  height: 150px;
+  font-weight: bold;
+}
+
+input[type='range'] {
+  width: 200px;
+  align-items: center;
+}
+
+.labels,
+.ranges,
+.texts {
+  padding-top: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+#label1 {
+  color: red;
+}
+
+#label2 {
+  color: green;
+}
+
+#label3 {
+  color: blue;
+}
+
+.labels {
+  width: 300px;
+}
+
+#text1 {
+  color: red;
+}
+
+#text2 {
+  color: green;
+}
+
+#text3 {
+  color: blue;
+}
+
+.cor {
+  margin-top: 30px;
+  margin-left: 300px;
+  width: 150px;
+  height: 150px;
+}
