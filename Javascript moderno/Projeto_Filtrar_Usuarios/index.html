@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../bootstrap-4/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <title>PESQUISA DE USUÁRIOS</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Pesquisa de Usuários</h1>
+      <div class="input-group">
+        <input type="text" id="name" class="form-control" placeholder="Nome" />
+        <button id="find" class="btn btn-info" disabled>Buscar</button>
+      </div>
+
+      <div class="lists">
+        <div id="usersList">
+          <h2 id="countUsers">Nenhum usuário encontrado</h2>
+          <div class="users"></div>
+        </div>
+        <div id="statistic">
+          <h2>Nada a ser exibido</h2>
+        </div>
+      </div>
+    </div>
+
+    <script src="../../jquery/jquery.min.js"></script>
+    <script src="../../bootstrap-4/js/bootstrap.min.js"></script>
+    <script src="./js/script.js"></script>
+  </body>
+</html>

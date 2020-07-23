@@ -1,0 +1,31 @@
+.container,
+#usersList,
+#statistic {
+  border: 1px solid gray;
+  padding: 10px;
+}
+
+#usersList {
+  width: 50%;
+}
+
+#statistic {
+  width: 50%;
+}
+
+.lists {
+  display: flex;
+}
+
+.input-group {
+  margin-bottom: 20px;
+}
+
+h1 {
+  text-align: center;
+  color: red;
+}
+
+.users img {
+  align-items: left;
+}
