@@ -23,6 +23,7 @@ function doFilter() {
   const liveInParana = people.results.filter((person) => {
     return person.location.state === 'Paraná';
   });
+  console.log('live');
   console.log(liveInParana);
 }
 
@@ -63,14 +64,14 @@ function doSome() {
   const found = people.results.some((person) => {
     return person.location.state === 'Amazonas';
   });
-  console.log(found);
+  console.log('found ' + found);
 }
 
 function doEvery() {
   const every = people.results.every((person) => {
     return person.location.country === 'Brasil';
   });
-  console.log(every);
+  console.log('every ' + every);
 }
 
 function doSort() {
