@@ -1,7 +1,6 @@
 import { promises as fs } from 'fs';
-//import { create } from 'domain';
-
 import readline from 'readline';
+
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
@@ -9,8 +8,10 @@ const rl = readline.createInterface({
 
 let statesFile = [];
 let citiesFile = [];
+let actualUf = null;
 
 let countStates = null;
+let countCitiesPerState = null;
 
 main();
 
@@ -21,11 +22,17 @@ async function main() {
 
   //createStatesWithCities();
   //countCitiesOfState();
+
+  catchState();
 }
 
 async function createStatesWithCities() {
+  const cidades = [];
   for (let i = 0; i <= countStates; i++) {
-    await fs.writeFile('./estados/' + statesFile[i].Sigla + '.json');
+    await fs.writeFile(
+      './estados/' + statesFile[i].Sigla + '.json',
+      JSON.stringify(cidades)
+    );
 
     await fs.appendFile(
       './estados/' + statesFile[i].Sigla + '.json',
@@ -38,13 +45,18 @@ async function createStatesWithCities() {
   }
 }
 
-async function countCitiesOfState() {
+function catchState() {
+  async function countCities() {
+    let cities = JSON.parse(
+      await fs.readFile('./estados/' + actualUf + '.json', 'utf-8')
+    );
+    console.log(cities.length);
+  }
   rl.question('Digite o UF do estado: ', (uf) => {
-    const filePath = './estados/' + uf.toUpperCase() + '.json';
-    rl.close();
-    let file = JSON.parse(await fs.readFile(filePath));
-    console.log(file);
-    const totalCities = file.length;
-    console.log(totalCities);
+    if (uf !== '') {
+      actualUf = uf.toUpperCase();
+      rl.close();
+    }
+    countCities();
   });
-}
+
