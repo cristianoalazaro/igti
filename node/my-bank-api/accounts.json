@@ -1,0 +1,46 @@
+{
+  "nextId": 9,
+  "accounts": [
+    {
+      "id": 1,
+      "nome": "Cristiano Ap Lázaro",
+      "balance": 1000
+    },
+    {
+      "id": 2,
+      "nome": "Elenice C Lázaro",
+      "balance": 526.5
+    },
+    {
+      "id": 3,
+      "nome": "Elenice C Lázaro",
+      "balance": 526.5
+    },
+    {
+      "id": 4,
+      "nome": "Bruno C Lázaro",
+      "balance": 526.5
+    },
+    {
+      "id": 5,
+      "nome": "Cristiane C Lázaro",
+      "balance": 526.5
+    },
+    {
+      "id": 6,
+      "nome": "Cristiane C Lázaro",
+      "balance": 150
+    },
+    {
+      "id": 7,
+      "nome": "Cristiane C Lázaro",
+      "balance": 150,
+      "idade": 15
+    },
+    {
+      "id": 8,
+      "name": "Clóvis Lázaro",
+      "balance": 150
+    }
+  ]
+}
