@@ -81,4 +81,67 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
+//GET que retorna a soma dos subjects de um student
+router.get('/soma/:student/:subject', async (req, res) => {
+  try {
+    const data = JSON.parse(await readFile(global.fileName));
+    data.grades = data.grades.filter(
+      (a) =>
+        a.student === req.params.student && a.subject === req.params.subject
+    );
+    const countData = data.grades.length;
+    let sumValue = 0;
+
+    for (let i = 0; i < countData; i++) {
+      sumValue += data.grades[i].value;
+    }
+
+    res.send('Total das notas: ' + sumValue);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+//GET média por subject e type
+router.get('/media/:subject/:type', async (req, res) => {
+  try {
+    const data = JSON.parse(await readFile(global.fileName));
+    data.grades = data.grades.filter(
+      (a) => a.subject === req.params.subject && a.type === req.params.type
+    );
+    const countData = data.grades.length;
+    let sumData = 0;
+
+    for (let i = 0; i < countData; i++) {
+      sumData += data.grades[i].value;
+    }
+    const avg = sumData / countData;
+
+    res.send('A média é: ' + sumData / countData);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+//GET retornar as 3 melhores grades de maior value, por subject e type
+router.get('/melhores/:subject/:type', async (req, res) => {
+  try {
+    const data = JSON.parse(await readFile(global.fileName));
+    data.grades = data.grades
+      .filter(
+        (a) => a.subject === req.params.subject && a.type === req.params.type
+      )
+      .sort((a, b) => b.value - a.value);
+
+    let melhores = [];
+
+    for (let i = 0; i <= 2; i++) {
+      melhores.push(data.grades[i]);
+    }
+    res.send(melhores);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 export default router;
