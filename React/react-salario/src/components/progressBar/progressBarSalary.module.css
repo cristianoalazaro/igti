@@ -1,0 +1,24 @@
+.main {
+  display: flexbox;
+}
+
+.inss {
+  display: inline-block;
+  background-color: #e67e22;
+  height: 20px;
+  width: 33%;
+}
+
+.irpf {
+  display: inline-block;
+  background-color: #c0392b;
+  height: 20px;
+  width: 33%;
+}
+
+.liquido {
+  display: inline-block;
+  background-color: #16a085;
+  height: 20px;
+  width: 33%;
+}

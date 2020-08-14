@@ -7,6 +7,7 @@ export default class Header extends Component {
     const NewText = event.target.value;
 
     this.props.onChangeFilter(NewText);
+    console.log(NewText);
   };
 
   render() {
