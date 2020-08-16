@@ -2,14 +2,18 @@ import React from 'react';
 import { formatNumber } from '../../helpers/formatHelpers';
 import css from './header.module.css';
 
-export default function Header(props) {
+export default function Header({
+  filter,
+  countryCount,
+  totalPopulation,
+  onChangeFilter,
+}) {
   const handleInputChange = (event) => {
     const NewText = event.target.value;
 
-    props.onChangeFilter(NewText);
+    onChangeFilter(NewText);
   };
 
-  const { filter, countryCount, totalPopulation } = props;
   return (
     <div className={css.flexRow}>
       <input
