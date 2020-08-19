@@ -64,14 +64,26 @@ async function getAllGrades() {
     });
   });
 
+  let maxId = -1;
+  grades.forEach(({ id }) => {
+    if (id > maxId) {
+      maxId = id;
+    }
+  });
+
+  let nextId = maxId + 1;
+
   allCombinations.forEach(({ student, subject, type }) => {
     const hasItem = grades.find((grade) => {
-      grade.subject =
-        subject && grade.student === student && grade.type === type;
+      return (
+        grade.subject === subject &&
+        grade.student === student &&
+        grade.type === type
+      );
     });
     if (!hasItem) {
       grades.push({
-        id: grades.length + 1,
+        id: nextId,
         student,
         studentLowerCase: student.toLowerCase(),
         subject,
@@ -84,7 +96,45 @@ async function getAllGrades() {
     }
   });
 
-  return allCombinations;
+  grades.sort((a, b) => a.typeLowerCase.localeCompare(b.typeLowerCase));
+  grades.sort((a, b) => a.subjectLowerCase.localeCompare(b.subjectLowerCase));
+  grades.sort((a, b) => a.studentLowerCase.localeCompare(b.studentLowerCase));
+
+  return grades;
 }
 
-export { getAllGrades };
+async function insertGrade(grade) {
+  const response = await axios.post(API_URL, grade);
+  return response.data.id;
+}
+
+async function updateGrade(grade) {
+  const response = await axios.put(API_URL, grade);
+  return response.data;
+}
+
+async function deleteGrade(grade) {
+  const response = await axios.delete(`${API_URL}/${grade.id}`);
+  return response.data;
+}
+
+async function getValidationFromType(gradeType) {
+  const gradeValidation = GRADE_VALIDATION.find(
+    (item) => item.gradeType === gradeType
+  );
+
+  const { minValue, maxValue } = gradeValidation;
+
+  return {
+    minValue,
+    maxValue,
+  };
+}
+
+export {
+  getAllGrades,
+  insertGrade,
+  updateGrade,
+  deleteGrade,
+  getValidationFromType,
+};
