@@ -38,15 +38,24 @@ export default function GradesControl({ grades, onDelete, onPersist }) {
   });
 
   const handleActionClick = (id, type) => {
-    console.log(id);
-    console.log(type);
+    const grade = grades.find((grade) => grade.id === id);
+
+    if (type === 'delete') {
+      onDelete(grade);
+      return;
+    }
+    onPersist(grade);
   };
 
   return (
     <div className="container">
       {tableGrades.map(({ id, grades }) => {
+        const finalGrade = grades.reduce((acc, curr) => acc + curr.value, 0);
+        const gradeStyle =
+          finalGrade >= 70 ? styles.goodGrades : styles.badGrades;
+
         return (
-          <table className="striped" key={id}>
+          <table style={styles.table} className="striped" key={id}>
             <thead>
               <tr>
                 <th style={{ width: '20%' }}>Aluno</th>
@@ -86,10 +95,38 @@ export default function GradesControl({ grades, onDelete, onPersist }) {
                 }
               )}
             </tbody>
-            <tfoot></tfoot>
+            <tfoot>
+              <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>
+                  <strong style={{ textAlign: 'right' }}>Total</strong>
+                </td>
+                <td>
+                  <span style={gradeStyle}>{finalGrade}</span>
+                </td>
+              </tr>
+            </tfoot>
           </table>
         );
       })}
     </div>
   );
 }
+
+const styles = {
+  goodGrades: {
+    fontWeight: 'bold',
+    color: 'green',
+  },
+
+  badGrades: {
+    fontWeight: 'bold',
+    color: 'red',
+  },
+  table: {
+    margin: '20px',
+    padding: '10px',
+  },
+};
