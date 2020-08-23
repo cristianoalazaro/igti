@@ -1,31 +1,19 @@
 import React from 'react';
 
-export default function Installment({
-  capitalInicial,
-  taxaJurosMensal,
-  periodo,
-  visibled,
-}) {
-  const handleList = () => {
-    const list = [];
-    for (let i = 1; i <= periodo; i++) {}
-  };
+export default function Installment(parcelas) {
+  const totalParcelas = [];
+  totalParcelas.push(parcelas);
 
   return (
-    <div style={{ display: visibled }}>
-      <h5>Resultado</h5>
-      <div style={styles.result} className="result">
-        <p>{capitalInicial}</p>
-        <p>{taxaJurosMensal}</p>
-        <p>{periodo}</p>
-      </div>
+    <div>
+      <p>{totalParcelas.id}</p>
     </div>
   );
 }
 
-const styles = {
-  result: {
-    border: 'solid 1px black',
-    width: '200px',
-  },
-};
+// const styles = {
+//   result: {
+//     border: 'solid 1px black',
+//     width: '200px',
+//   },
+// };

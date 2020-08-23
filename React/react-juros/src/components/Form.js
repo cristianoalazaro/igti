@@ -1,34 +1,53 @@
 import React, { useState } from 'react';
-import Installments from './Installments';
+//import Installments from './Installments';
+import { useEffect } from 'react';
 
 export default function Form() {
   const [capitalInicial, setCapitalInicial] = useState(1);
   const [taxaJurosMensal, setTaxaJurosMensal] = useState(1);
   const [periodo, setPeriodo] = useState(1);
-  const [visibled, setVisibled] = useState('none');
+  const [parcelas, setParcelas] = useState([]);
 
-  const handleCapitalInicial = (event) => {
-    setCapitalInicial(event.target.value);
-    unvisibleResult();
-  };
+  let aux = capitalInicial;
+  //let percentage = aux;
+  let totalPercentage = 0;
+  let totalNewValue = 0;
 
-  const handleJurosMensal = (event) => {
-    setTaxaJurosMensal(event.target.value);
-    unvisibleResult();
-  };
+  useEffect(() => {
+    const parcelas = [];
+    for (let i = 0; i < periodo; i++) {
+      let newValue = aux;
+      //let totalNewValue = 0;
+      let percentage = (aux / 100) * taxaJurosMensal + aux;
+      percentage -= aux;
+      percentage /= aux;
+      percentage *= 100;
+      totalPercentage += percentage;
 
-  const handlePeriodo = (event) => {
-    setPeriodo(event.target.value);
-    unvisibleResult();
-  };
-
-  const handleResult = () => {
-    setVisibled('block');
-  };
-
-  const unvisibleResult = () => {
-    setVisibled('none');
-  };
+      parcelas.push({
+        id: i + 1,
+        value: (newValue / 100) * taxaJurosMensal,
+        newValue: (newValue / 100) * taxaJurosMensal + newValue,
+        totalNewValue: (newValue / 100) * taxaJurosMensal + totalNewValue,
+        percentage: totalPercentage,
+      });
+      newValue += parcelas[i].value;
+      totalNewValue += parcelas[i].value;
+      aux = newValue;
+    }
+    setParcelas(parcelas);
+    const parcelasTotal = parcelas.map(
+      ({ id, newValue, totalNewValue, percentage }) => {
+        return {
+          id,
+          valor: newValue,
+          total: totalNewValue,
+          porcentagem: percentage,
+        };
+      }
+    );
+    console.log(parcelasTotal);
+  }, [capitalInicial, taxaJurosMensal, periodo]);
 
   return (
     <div>
@@ -42,7 +61,7 @@ export default function Form() {
               max="100000"
               value={capitalInicial}
               autoFocus
-              onChange={handleCapitalInicial}
+              onChange={({ target }) => setCapitalInicial(Number(target.value))}
             />
             <label className="active" htmlFor="input-montante-inicial">
               Montante inicial:
@@ -57,7 +76,9 @@ export default function Form() {
               max="12"
               step="0.1"
               value={taxaJurosMensal}
-              onChange={handleJurosMensal}
+              onChange={({ target }) =>
+                setTaxaJurosMensal(Number(target.value))
+              }
             />
             <label className="active" htmlFor="input-juros-mensal">
               Taxa de Juros Mensal:
@@ -70,7 +91,7 @@ export default function Form() {
               type="number"
               min="1"
               max="36"
-              onChange={handlePeriodo}
+              onChange={({ target }) => setPeriodo(Number(target.value))}
             />
             <label className="active" htmlFor="input-periodo">
               Período (meses):
@@ -78,21 +99,8 @@ export default function Form() {
           </div>
         </div>
       </form>
-      <div className="centered">
-        <button
-          className="waves-effect waves-light btn green dark-4"
-          onClick={handleResult}
-        >
-          Calcular
-        </button>
-      </div>
+      <div className="centered"></div>
       <hr />
-      <Installments
-        capitalInicial={capitalInicial}
-        taxaJurosMensal={taxaJurosMensal}
-        periodo={periodo}
-        visibled={visibled}
-      />
     </div>
   );
 }
