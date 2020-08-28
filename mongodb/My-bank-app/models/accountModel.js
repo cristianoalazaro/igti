@@ -1,7 +1,8 @@
 import mongoose from 'mongoose';
+
 const accountSchema = mongoose.Schema({
   agencia: {
-    type: String,
+    type: Number,
     require: true,
   },
   conta: {
@@ -19,6 +20,6 @@ const accountSchema = mongoose.Schema({
   },
 });
 
-const accountModel = mongoose.model('account', accountSchema, 'account');
+const accountModel = mongoose.model('accounts', accountSchema, 'accounts');
 
 export { accountModel };
