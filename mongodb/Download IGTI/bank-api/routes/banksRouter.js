@@ -1,10 +1,10 @@
-import express from "express";
-import Accounts from "../models/Accounts.js";
+import express from 'express';
+import Accounts from '../models/Accounts.js';
 
 const router = express.Router();
 
 // Item 4 - Crie um endpoint para registrar um depósito em uma conta
-router.patch("/account/deposit/", async (req, res, next) => {
+router.patch('/account/deposit/', async (req, res, next) => {
   try {
     const account = req.body;
     let newDeposit = await validateAccount(account);
@@ -18,7 +18,7 @@ router.patch("/account/deposit/", async (req, res, next) => {
 });
 
 // Item 5. Crie um endpoint para registrar um saque em uma conta.
-router.patch("/account/withdraw/", async (req, res, next) => {
+router.patch('/account/withdraw/', async (req, res, next) => {
   try {
     const account = req.body;
     let newDrawMoney = await validateAccount(account);
@@ -26,7 +26,7 @@ router.patch("/account/withdraw/", async (req, res, next) => {
     // valida saldo mais valor do saque antes de efetivar de fato o saque
     newDrawMoney.balance -= account.balance + 1; // valor + taxa de 1;
     if (newDrawMoney.balance < 0) {
-      throw new Error("saldo insuficiente");
+      throw new Error('saldo insuficiente');
     }
 
     newDrawMoney = new Accounts(newDrawMoney);
@@ -38,7 +38,7 @@ router.patch("/account/withdraw/", async (req, res, next) => {
 });
 
 // Item 6. Crie um endpoint para consultar o saldo da conta
-router.get("/account/checkBalance/", async (req, res, next) => {
+router.get('/account/checkBalance/', async (req, res, next) => {
   try {
     const account = req.body;
     const checkBalance = await validateAccount(account);
@@ -49,7 +49,7 @@ router.get("/account/checkBalance/", async (req, res, next) => {
 });
 
 // Item 7. Crie um endpoint para excluir uma conta.
-router.delete("/account/delete/", async (req, res, next) => {
+router.delete('/account/delete/', async (req, res, next) => {
   try {
     const account = req.body;
     let deleteAccount = await validateAccount(account);
@@ -69,7 +69,7 @@ router.delete("/account/delete/", async (req, res, next) => {
 });
 
 // Item 8. Crie um endpoint para realizar transferências entre contas.
-router.patch("/account/transfer/", async (req, res, next) => {
+router.patch('/account/transfer/', async (req, res, next) => {
   try {
     const accounts = req.body;
     const transferMoney = accounts.contaOrigem.balance;
@@ -85,7 +85,7 @@ router.patch("/account/transfer/", async (req, res, next) => {
     // valida saldo mais valor do saque antes de efetivar de fato o saque
     sourceAccount.balance -= transferMoney; // valor + taxa de 1;
     if (sourceAccount.balance < 0) {
-      throw new Error("saldo insuficiente para efetuar a transferencia");
+      throw new Error('saldo insuficiente para efetuar a transferencia');
     }
 
     // deposita o valor da tranferencia na conta de destino
@@ -107,7 +107,7 @@ router.patch("/account/transfer/", async (req, res, next) => {
 });
 
 // Item 9. Crie um endpoint para consultar a média do saldo dos clientes de determinada agência.
-router.get("/account/averageBalance/", async (req, res, next) => {
+router.get('/account/averageBalance/', async (req, res, next) => {
   try {
     const agencia = req.body.agencia;
     const averageBalance = await Accounts.aggregate([
@@ -118,15 +118,15 @@ router.get("/account/averageBalance/", async (req, res, next) => {
       },
       {
         $group: {
-          _id: "$agencia",
+          _id: '$agencia',
           media: {
-            $avg: "$balance",
+            $avg: '$balance',
           },
         },
       },
     ]);
     if (averageBalance.length === 0) {
-      throw new Error("agencia nao encontrada");
+      throw new Error('agencia nao encontrada');
     }
     res.send(averageBalance);
   } catch (error) {
@@ -135,13 +135,13 @@ router.get("/account/averageBalance/", async (req, res, next) => {
 });
 
 // Item 10. Crie um endpoint para consultar os clientes com o menor saldo em conta.
-router.get("/account/topByBalance/", async (req, res, next) => {
+router.get('/account/topByBalance/', async (req, res, next) => {
   try {
     const limit = req.body.limit;
     const order = req.body.order;
     const topByBalance = await Accounts.find({}).limit(limit).sort(order);
     if (topByBalance.length === 0) {
-      throw new Error("nenhum cliente encontrado");
+      throw new Error('nenhum cliente encontrado');
     }
     res.send(topByBalance);
   } catch (error) {
@@ -150,13 +150,13 @@ router.get("/account/topByBalance/", async (req, res, next) => {
 });
 
 // Item 11. Crie um endpoint para consultar os clientes mais ricos do banco.
-router.get("/account/topRicher/", async (req, res, next) => {
+router.get('/account/topRicher/', async (req, res, next) => {
   try {
     const limit = req.body.limit;
     const order = req.body.order;
     const topRicher = await Accounts.find({}).limit(limit).sort(order);
     if (topRicher.length === 0) {
-      throw new Error("nenhum cliente encontrado");
+      throw new Error('nenhum cliente encontrado');
     }
     res.send(topRicher);
   } catch (error) {
@@ -165,13 +165,13 @@ router.get("/account/topRicher/", async (req, res, next) => {
 });
 
 // Item 12. Crie um endpoint que irá transferir o cliente com maior saldo em conta de cada agência para a agência private agencia=99.
-router.get("/account/transferToPrivate/", async (req, res, next) => {
+router.get('/account/transferToPrivate/', async (req, res, next) => {
   try {
     let transferToPrivates = await Accounts.aggregate([
       {
         $group: {
-          _id: "$agencia",
-          balance: { $max: "$balance" },
+          _id: '$agencia',
+          balance: { $max: '$balance' },
         },
       },
     ]);
@@ -188,7 +188,7 @@ router.get("/account/transferToPrivate/", async (req, res, next) => {
       newAccounts.save();
     }
     transferToPrivates = await Accounts.find({
-        agencia: 99
+      agencia: 99,
     });
     res.send(transferToPrivates);
   } catch (error) {
