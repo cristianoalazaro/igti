@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 
+//Modelo de dados
 const accountSchema = mongoose.Schema({
   agencia: {
     type: Number,
